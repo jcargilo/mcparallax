@@ -7,8 +7,19 @@ McParallax is a jQuery plugin to take parallax scrolling effects run in a websit
 
 ## Getting Started
 
-Download and insert `mcparallax.min.js`
+Include `mcparallax.min.js` in your document after including jQuery.
 
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/path/to/mcparallax.min.js"></script>
+```
+
+To add parallax effect to a container add an element like this:
+```html
+<div class="mcparallax" data-image-src="/path/to/image.jpg"></div>
+```
+
+Example:
 ```html
 <section>
     <div class="mcparallax" data-image-src="/assets/images/image-par-03.jpg" data-speed="2"></div>
