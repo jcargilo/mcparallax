@@ -3,6 +3,8 @@
 
 McParallax is a jQuery plugin to take parallax scrolling effects run in a website.
 
+* [Demo](https://github.com/elmao79/mcparallax.git)
+
 ## Getting Started
 
 Download and insert `mcparallax.min.js`
