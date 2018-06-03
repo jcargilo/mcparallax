@@ -11,8 +11,7 @@ Download and insert `mcparallax.min.js`
 
 ```html
 <section>
-    <div class="mcparallax" data-image-src="/assets/images/image-par-03.jpg" data-speed="2">
-    </div>
+    <div class="mcparallax" data-image-src="/assets/images/image-par-03.jpg" data-speed="2"></div>
 
     <div class="container container-below-navbar text-white">
         <h1 class="display-3 text-center font-title font-bold pb-2">Text title</h1>
