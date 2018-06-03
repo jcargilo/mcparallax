@@ -5,12 +5,14 @@ function loadMcParallaxPlugin($) {
         var elementBottom = $(el).offset().top + $(el).outerHeight();
         var viewportBottom = $(window).scrollTop() + window.innerHeight;
         var isInViewport = elementBottom > $(window).scrollTop() && $(el).offset().top < viewportBottom;
+        //console.log(`${elementBottom} - ${$(window).scrollTop()} - ${$(el).offset().top} - ${viewportBottom}`);
 
         return isInViewport;
-    }
+    };
 
     var createMcParallax = function(el) {
         if ($(el).data('image-src')) {
+            $(el).parent().css('position', 'relative');
             $(el).css('position', 'absolute');
             $(el).css('height', '100%');
             $(el).css('width', '100%');
@@ -28,12 +30,33 @@ function loadMcParallaxPlugin($) {
 
             var img = new Image;
             img.onload = function() {
-                var backImgHeight = $(el).height() + window.innerHeight * 2;
+                var backImgHeight = $(el).outerHeight() * (1 + (getSpeed(el) / 10));
+                /*
+                 * The background image needs to full screen width so it checks if the scaled width
+                 * of the image is less than the screen width and in this case it rescale the image height
+                 * with a new scale obtained from the width.
+                 */
+                var scale = backImgHeight / this.height;
+                if (this.width * scale < window.innerWidth) {
+                    scale = window.innerWidth / this.width;
+                    backImgHeight = this.height * scale;
+                }
                 $(el).css('background-size', 'auto ' + backImgHeight + 'px');
                 parallaxMove(el);
             };
             img.src = $(el).data('image-src');
         }
+    };
+
+    var getSpeed = function(el) {
+        var moveSpeed = parseInt($(el).data('speed')) || 2;
+        if (moveSpeed > 10) {
+            moveSpeed = 10;
+        } else if (moveSpeed < 2) {
+            moveSpeed = 2;
+        }
+
+        return moveSpeed;
     };
 
     var parallaxMove = function(el) {
@@ -42,10 +65,12 @@ function loadMcParallaxPlugin($) {
             var elementTop = $(el).offset().top;
             var viewportBottom = $(window).scrollTop() + window.innerHeight;
             imgPos = viewportBottom - elementTop;
+            var scale = (window.innerHeight * 2) / ($(el).outerHeight() * (getSpeed(el) / 10));
+            imgPos = imgPos / scale;
         } else {
             imgPos = 0;
         }
-        $(el).css('background-position', '0 -' + imgPos + 'px');
+        $(el).css('background-position', 'center -' + imgPos + 'px');
     };
 
     $.fn.mcParallax = function() {
@@ -65,6 +90,10 @@ function loadMcParallaxPlugin($) {
         });
     };
 
+    $(document).ready(function() {
+        $('.mcparallax').mcParallax();
+    });
+
 }
 
 /**
@@ -74,17 +103,14 @@ function loadMcParallaxPlugin($) {
  */
 function waitUntiljQueryLoad(i) {
     var nAttempts = i || 0;
-    if (nAttempts < 100) {
+    if (nAttempts < 200) {
         nAttempts += 1;
         if (typeof jQuery === 'undefined') {
             setTimeout(function() {
                 waitUntiljQueryLoad(nAttempts);
-            }, 100);
+            }, 50);
         } else {
             loadMcParallaxPlugin(jQuery);
-            $(document).ready(function() {
-                $('.mcparallax').mcParallax();
-            });
         }
     }
 }
