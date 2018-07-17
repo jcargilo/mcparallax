@@ -76,9 +76,7 @@ function loadMcParallaxPlugin($) {
     $.fn.mcParallax = function() {
         return this.each(function() {
             var el = this;
-            $(window).on('load', function() {
-                createMcParallax(el);
-            });
+            createMcParallax(el);
 
             $(window).resize(function() {
                 createMcParallax(el);
