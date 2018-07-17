@@ -70,7 +70,15 @@ function loadMcParallaxPlugin($) {
         } else {
             imgPos = 0;
         }
-        $(el).css('background-position', 'center -' + imgPos + 'px');
+
+        var xPosition = 'auto';
+        if ($(el).data('position-x') != undefined)
+        {
+            var offset = parseInt($(el).data('position-x'));
+            if (offset > 0)
+                xPosition = offset + '%';
+        }
+        $(el).css('background-position', xPosition + ' -' + imgPos + 'px');
     };
 
     $.fn.mcParallax = function() {
