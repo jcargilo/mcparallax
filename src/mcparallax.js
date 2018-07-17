@@ -30,7 +30,7 @@ function loadMcParallaxPlugin($) {
 
             var img = new Image;
             img.onload = function() {
-                var backImgHeight = $(el).outerHeight() * (1 + (getSpeed(el) / 10));
+                var backImgHeight = $(el).outerHeight() * (1 + (getSpeed(el) / 3));
                 /*
                  * The background image needs to full screen width so it checks if the scaled width
                  * of the image is less than the screen width and in this case it rescale the image height
@@ -65,7 +65,7 @@ function loadMcParallaxPlugin($) {
             var elementTop = $(el).offset().top;
             var viewportBottom = $(window).scrollTop() + window.innerHeight;
             imgPos = viewportBottom - elementTop;
-            var scale = (window.innerHeight * 2) / ($(el).outerHeight() * (getSpeed(el) / 10));
+            var scale = (window.innerHeight * 2) / ($(el).outerHeight() * (getSpeed(el) / 3));
             imgPos = imgPos / scale;
         } else {
             imgPos = 0;
@@ -91,7 +91,6 @@ function loadMcParallaxPlugin($) {
     $(document).ready(function() {
         $('.mcparallax').mcParallax();
     });
-
 }
 
 /**
